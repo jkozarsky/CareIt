@@ -27,7 +27,9 @@ class LogInViewController: UIViewController, UITextFieldDelegate {
             in
             
             if error == nil && user != nil{
-                self.dismiss(animated: false, completion: nil)
+                //this uses the navication controller to go back to the launch screen,
+                // which then automatically segues to the home screen
+                self.navigationController?.popViewController(animated: true)
             }
             else{
                 print(error!.localizedDescription)
@@ -38,6 +40,7 @@ class LogInViewController: UIViewController, UITextFieldDelegate {
     //Sets delegates
     override func viewDidLoad() {
         super.viewDidLoad()
+        navigationController?.navigationBar.isHidden = false
         emailTextField.delegate = self
         passwordTextField.delegate = self
         emailTextField.becomeFirstResponder()
@@ -54,6 +57,15 @@ class LogInViewController: UIViewController, UITextFieldDelegate {
         }
         return true 
     }
+    
+    
+//    CODE FOR HUGHES
+//    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+//        switch segue.identifier {
+//        case "MyWhateverScreen":
+//            let destination = segue.destination as! LogInViewController
+//        }
+//    }
 
-
+    
 }

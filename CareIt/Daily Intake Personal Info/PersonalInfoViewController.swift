@@ -38,7 +38,7 @@ class PersonalInfoViewController: UIViewController, UIPickerViewDataSource, UIPi
         guard let uid = Auth.auth().currentUser?.uid else {return}
         let database = Database.database().reference().child("users\(uid)")
         
-        // the user's info gets stored in this dictionary, which then gets uploaded to the database
+        // the user's info gets stored in this dictionary
         var userObject: [String: Any] = [:]
         
         if let sexChoice = sexChoice{
@@ -57,6 +57,7 @@ class PersonalInfoViewController: UIViewController, UIPickerViewDataSource, UIPi
             userObject["BirthDate"] = birthDateChoice
         }
         
+        //uploads the users info, as a dictionary, to the database
         database.setValue(userObject)
         
         self.performSegue(withIdentifier: "toCalorieScreen", sender: self)

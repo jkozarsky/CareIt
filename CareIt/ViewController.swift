@@ -18,6 +18,11 @@ class ViewController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        
+        // hides the navigation bar because there is nowhere to navigate to that does not use the buttons
+        navigationController?.navigationBar.isHidden = true
+        
+        //segues to the home screen view controller if the user is logged in
         if let user = Auth.auth().currentUser{
             self.performSegue(withIdentifier: "toHomeScreen", sender: self)
         }

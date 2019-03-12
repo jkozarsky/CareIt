@@ -12,7 +12,7 @@ import Foundation
 
 class StringManipulation{
     
-    static func manipulateString(_ foodString: String) -> [String] {
+    static func getIngredientsArray(_ foodString: String) -> [String] {
         
         var fullNameArr = foodString.components(separatedBy: " ")
         var ingredients = [String]()
