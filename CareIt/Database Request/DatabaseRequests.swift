@@ -23,7 +23,7 @@ class DatabaseRequests {
     
         guard let url = URL(string: urlString) else {
             self.internetConnectionError()
-            self.currentlyProcessing = false
+            
             DispatchQueue.main.async(execute: afterLoading)
             return
         }
@@ -32,7 +32,7 @@ class DatabaseRequests {
             
             guard let data = data else {
                 self.internetConnectionError()
-                self.currentlyProcessing = false
+                
                 DispatchQueue.main.async(execute: afterLoading)
                 return
             }
@@ -46,7 +46,7 @@ class DatabaseRequests {
     
                 guard let url = URL(string: ndbString) else {
                     self.internetConnectionError()
-                    self.currentlyProcessing = false
+                    
                     DispatchQueue.main.async(execute: afterLoading)
                     return
                 }
@@ -54,15 +54,15 @@ class DatabaseRequests {
                 //second request inside the first
                 URLSession.shared.dataTask(with: url) {
                     (data, request, error) in
-                    guard let data = data else {self.internetConnectionError(); afterLoading(); self.currentlyProcessing = false; return}
+                    guard let data = data else {self.internetConnectionError(); afterLoading(); return}
                     do {
                         let res = try JSONDecoder().decode(NDBDatabaseRequest.self, from: data)
                         self.result = res.foods.first?.food
-                        self.currentlyProcessing = false
+                        
                         DispatchQueue.main.async(execute: afterLoading)
                     } catch {
                         self.decodingError()
-                        self.currentlyProcessing = false
+                        
                         DispatchQueue.main.async(execute: afterLoading)
                         return
                     }
@@ -71,7 +71,7 @@ class DatabaseRequests {
     
             } catch {
                 self.decodingError()
-                self.currentlyProcessing = false
+                
                 DispatchQueue.main.async(execute: afterLoading)
                 return
             }
@@ -88,7 +88,7 @@ class DatabaseRequests {
     }
     
     func decodingError() {
-        self.error = "An error occurred. The barcode was not found."
+        self.error = "An error occurred. The barcode was not found in the database."
     }
 
 }

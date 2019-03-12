@@ -12,7 +12,6 @@
 		3D38C75521EFAC600027A3B1 /* FoodIDDatabaseRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D38C75421EFAC600027A3B1 /* FoodIDDatabaseRequest.swift */; };
 		3D3DAFDE22120474005B386F /* CameraViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D3DAFDD22120474005B386F /* CameraViewController.swift */; };
 		3D8A76AA21F16B960002724F /* NDBDatabaseRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D8A76A921F16B960002724F /* NDBDatabaseRequest.swift */; };
-		3DE5AEEC2229BDAB005F271F /* FoodRequestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DE5AEEB2229BDAB005F271F /* FoodRequestView.swift */; };
 		4308D27B221F18E3008FB380 /* CalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4308D27A221F18E3008FB380 /* CalendarView.swift */; };
 		43385F7A2200CF8F008F5F13 /* PersonalInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43385F792200CF8F008F5F13 /* PersonalInfoViewController.swift */; };
 		435032C1221C8F2000CB22F9 /* MonthView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 435032C0221C8F2000CB22F9 /* MonthView.swift */; };
@@ -55,7 +54,6 @@
 		3D38C75421EFAC600027A3B1 /* FoodIDDatabaseRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = FoodIDDatabaseRequest.swift; path = "../New Group/FoodIDDatabaseRequest.swift"; sourceTree = "<group>"; };
 		3D3DAFDD22120474005B386F /* CameraViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraViewController.swift; sourceTree = "<group>"; };
 		3D8A76A921F16B960002724F /* NDBDatabaseRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NDBDatabaseRequest.swift; sourceTree = "<group>"; };
-		3DE5AEEB2229BDAB005F271F /* FoodRequestView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodRequestView.swift; sourceTree = "<group>"; };
 		4308D27A221F18E3008FB380 /* CalendarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarView.swift; sourceTree = "<group>"; };
 		43385F792200CF8F008F5F13 /* PersonalInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonalInfoViewController.swift; sourceTree = "<group>"; };
 		435032C0221C8F2000CB22F9 /* MonthView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthView.swift; sourceTree = "<group>"; };
@@ -151,7 +149,6 @@
 				EBA677362226DEC800FEBCBA /* Database Request */,
 				EBA677372226DF2C00FEBCBA /* Daily Intake Personal Info */,
 				3D3DAFDD22120474005B386F /* CameraViewController.swift */,
-				3DE5AEEB2229BDAB005F271F /* FoodRequestView.swift */,
 				EB4F660621E9220F004C3444 /* AddExtensions.swift */,
 				480F5AFB21DE763000B0CFB5 /* Assets.xcassets */,
 				480F5AFD21DE763000B0CFB5 /* LaunchScreen.storyboard */,
@@ -386,7 +383,6 @@
 				480F5AF521DE762D00B0CFB5 /* AppDelegate.swift in Sources */,
 				3D3DAFDE22120474005B386F /* CameraViewController.swift in Sources */,
 				4308D27B221F18E3008FB380 /* CalendarView.swift in Sources */,
-				3DE5AEEC2229BDAB005F271F /* FoodRequestView.swift in Sources */,
 				4861E7D6221C8FF600D28F19 /* HomeScreenViewController.swift in Sources */,
 				43385F7A2200CF8F008F5F13 /* PersonalInfoViewController.swift in Sources */,
 				48DB7F07222EE7E8004DFB57 /* UserAllergies.swift in Sources */,

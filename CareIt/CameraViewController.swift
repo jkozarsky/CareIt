@@ -14,7 +14,7 @@ class CameraViewController: UIViewController, AVCaptureMetadataOutputObjectsDele
     let barcodeFrameView = UIView()
     let captureSession = AVCaptureSession()
     var videoPreviewLayer: AVCaptureVideoPreviewLayer?
-    let databaseRequest = DatabaseRequests(barcodeString: "")
+    var databaseRequest = DatabaseRequests(barcodeString: "")
     var popupView: UIView?
     
     override func viewDidLoad() {
@@ -96,7 +96,6 @@ class CameraViewController: UIViewController, AVCaptureMetadataOutputObjectsDele
         
         if metadataObj.type == AVMetadataObject.ObjectType.ean13 {
             
-            // If the found metadata is equal to the QR code metadata then update the status label's text and set the bounds
             let barcodeObject = videoPreviewLayer?.transformedMetadataObject(for: metadataObj)
             barcodeFrameView.frame = barcodeObject!.bounds
             
@@ -109,7 +108,7 @@ class CameraViewController: UIViewController, AVCaptureMetadataOutputObjectsDele
             loadingText.textColor = .white
             
             if let barcodeString = metadataObj.stringValue  {
-                databaseRequest.barcodeString = String(barcodeString[barcodeString.index(after: barcodeString.startIndex)..<barcodeString.endIndex])
+                 self.databaseRequest = DatabaseRequests(barcodeString: String(barcodeString[barcodeString.index(after: barcodeString.startIndex)..<barcodeString.endIndex]))
                 databaseRequest.request(beforeLoading: {
                     self.barcodeFrameView.frame = .zero
                     self.view.addSubview(loadingView)
@@ -138,32 +137,126 @@ class CameraViewController: UIViewController, AVCaptureMetadataOutputObjectsDele
     
     func errorFoodRequest(_ view: UIView, error: String?) {
         view.backgroundColor = .red
+        print("error")
+        
+//        let errorBanner = UILabel()
+//        errorBanner.bounds = CGRect(x: view.bounds.minX, y: view.bounds.minY, width: view.bounds.width, height: view.bounds.height * 3/4)
+//        errorBanner.font = UIFont(name: "Helvetica Neue", size: 30)
+//        errorBanner.textAlignment = .center
+//        errorBanner.numberOfLines = 0
+//        errorBanner.lineBreakMode = .byWordWrapping
+//
+//        view.addSubview(errorBanner)
+        
+//        if let error = error {
+//            errorBanner.text = error
+//        } else {
+//            errorBanner.text = "An error occurred."
+//        }
+        
+        let dismissButton = UIButton(type: .custom)
+        dismissButton.backgroundColor = .black
+
+        dismissButton.setTitle("Done", for: .normal)
+        dismissButton.setTitleColor(.white, for: .normal)
+        dismissButton.translatesAutoresizingMaskIntoConstraints = false
+        
+        dismissButton.layer.cornerRadius = 8
+        dismissButton.layer.masksToBounds = true
+        
+        view.addSubview(dismissButton)
+        dismissButton.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.3).isActive = true
+        dismissButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        dismissButton.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.1).isActive = true
+        dismissButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -10).isActive = true
         
         let errorBanner = UILabel()
-        errorBanner.bounds = CGRect(x: view.bounds.minX, y: view.bounds.minY, width: view.bounds.width, height: view.bounds.height * 3/4)
-        errorBanner.font = UIFont(name: "Helvetica Neue", size: 30)
-        errorBanner.textAlignment = .center
-        errorBanner.numberOfLines = 0
-        errorBanner.lineBreakMode = .byWordWrapping
+        view.addSubview(errorBanner)
+        errorBanner.translatesAutoresizingMaskIntoConstraints = false
+        errorBanner.topAnchor.constraint(equalTo: view.topAnchor, constant: 10).isActive = true
+        errorBanner.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.8).isActive = true
+        errorBanner.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        errorBanner.bottomAnchor.constraint(equalTo: dismissButton.bottomAnchor, constant: -10).isActive = true
         
         if let error = error {
             errorBanner.text = error
         } else {
-            errorBanner.text = "An error occurred."
+            errorBanner.text = "An error occurred. Please try again."
         }
         
-        let dismissButton = UIButton(type: .custom)
-        dismissButton.backgroundColor = .red
-        
-        dismissButton.bounds = CGRect(x: view.bounds.minX + view.bounds.width/3, y: view.bounds.minY + view.bounds.height * 3/4, width: view.bounds.width/3, height: view.bounds.height/4)
+        errorBanner.font = UIFont(name: "Avenir Medium", size: 30)
+        errorBanner.textColor = .white
+        errorBanner.numberOfLines = 0
+        errorBanner.lineBreakMode = .byWordWrapping
+        errorBanner.textAlignment = .center
         
         self.popupView = view
         dismissButton.addTarget(self, action: #selector(doneButton(_:)), for: .touchUpInside)
     }
     
-    func foodRequest(_ displayView: UIView, food: Food) {
-        let request = FoodRequestView(displayView, food: food)
-        request.setup()
+    func foodRequest(_ view: UIView, food: Food) {
+        
+        self.popupView = view
+        
+        let dismissButton = UIButton(type: .custom)
+        dismissButton.backgroundColor = .black
+        
+        dismissButton.setTitle("Done", for: .normal)
+        dismissButton.setTitleColor(.white, for: .normal)
+        dismissButton.translatesAutoresizingMaskIntoConstraints = false
+        
+        dismissButton.layer.cornerRadius = 8
+        dismissButton.layer.masksToBounds = true
+        
+        view.addSubview(dismissButton)
+        dismissButton.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.3).isActive = true
+        dismissButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        dismissButton.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.1).isActive = true
+        dismissButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -10).isActive = true
+        dismissButton.addTarget(self, action: #selector(doneButton(_:)), for: .touchUpInside)
+        
+        view.alpha = 1
+        view.backgroundColor = .white //we should probably figure out what color this actually will be
+        
+        let foodTitle = UILabel()
+        
+        view.addSubview(foodTitle)
+        
+        foodTitle.translatesAutoresizingMaskIntoConstraints = false
+        foodTitle.topAnchor.constraint(equalTo: view.topAnchor, constant: 10).isActive = true
+        foodTitle.widthAnchor.constraint(equalTo: view.widthAnchor, constant: -20).isActive = true
+        foodTitle.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        foodTitle.contentMode = .center
+        
+        foodTitle.font = UIFont(name: "Helvetica Neue", size: 30)
+        foodTitle.text = processTitle(food.desc.name)
+        foodTitle.textAlignment = .center
+        
+        
+        foodTitle.contentMode = .center
+        
+        if let allergies = userAllergic() {
+            
+            let warningLabel = UILabel()
+            warningLabel.translatesAutoresizingMaskIntoConstraints = false
+            warningLabel.text = "Unsafe to Eat 💀"
+            warningLabel.font = UIFont(name: "Helvetica Neue", size: 30)
+            warningLabel.backgroundColor = .red
+            warningLabel.textColor = .white
+            view.addSubview(warningLabel)
+            warningLabel.topAnchor.constraint(equalTo: foodTitle.bottomAnchor, constant: 20).isActive = true
+            warningLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        } else {
+            let okayLabel = UILabel()
+            okayLabel.translatesAutoresizingMaskIntoConstraints = false
+            okayLabel.text = "Safe to Eat 🍴"
+            okayLabel.font = UIFont(name: "Helvetica Neue", size: 30)
+            okayLabel.backgroundColor = .green
+            okayLabel.textColor = .white
+            view.addSubview(okayLabel)
+            okayLabel.topAnchor.constraint(equalTo: foodTitle.bottomAnchor, constant: 20).isActive = true
+            okayLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        }
     }
     
     @objc func doneButton(_ sender: Any) {
@@ -171,8 +264,26 @@ class CameraViewController: UIViewController, AVCaptureMetadataOutputObjectsDele
         self.popupView = nil
         databaseRequest.currentlyProcessing = false
     }
+    
     @IBAction func backButton(_ sender: Any) {
         self.dismiss(animated: true, completion: nil)
     }
     
+}
+
+func processTitle(_ title: String) -> String {
+    //remove all UPC: stuff
+    let separated = title.split(separator: " ")
+    let filtered = separated.filter {arg in
+        return Int64(arg) == nil && arg != "UPC:"
+    }
+    return filtered.joined(separator: " ").replacingOccurrences(of: ",", with: "")
+}
+
+func userAllergic() -> [String]? {
+    if Double.random(in: 0...1) > 0.5{
+        return nil
+    } else {
+        return ["sadness", "unhappiness", "tears"]
+    }
 }
